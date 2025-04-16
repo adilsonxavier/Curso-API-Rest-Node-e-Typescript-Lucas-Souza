@@ -1,0 +1,16 @@
+{
+  "name": "Curso-API-Rest-Node-e-Typescript-Lucas-Souza",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/adilsonxavier/Curso-API-Rest-Node-e-Typescript-Lucas-Souza",
+  "author": "adilsonxavier <adilsonxdesouza@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  }
+}

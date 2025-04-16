@@ -1,0 +1,41 @@
+API Rest, Node e Typescript: 
+https://www.youtube.com/watch?v=SVepTuBK4V0&list=PL29TaWXah3iaaXDFPgTHiFMBF6wQahurP&index=1
+Curso API Rest, Node e Typescript - Lucas Souza
+
+=======================
+https://www.youtube.com/watch?v=-gt6RyiIyxo&list=PLE0DHiXlN_qqOfRvFS0BiwZXGrsKs7HFx&index=22
+Primeiros passos para criação de APIs Restfull - Jorge Aluizio
+========================
+
+Instalar o nvm ( versões do node - não deu certp)
+https://github.com/coreybutler/nvm-windows/releases
+nvm-setup.exe
+--------------------------
+
+yarn add express
+yarn add -D typescript @types/express ts-node-dev
+* @types/express - pro express trabalhar com typescript
+* ts-node-dev - converte automaticamente o arquivo typescript pra javascript sem precisar do typescript
+  Não deve ser usado em produção, por isso foi instalado domo -D
+
+yarn ts-node-dev ./src/index.ts
+rodando com o ts-node-dev , o index.ts é rodado e não atualiza o index.js correspondente.
+pra atualizar o  index.js precisa do yarn tsc mesmo
+
+Se der erro de import com o ts-node-dev , crie o arquivo tsconfig.json como explicado abaixo.
+
+Quando eu rodo yarn ts-node-dev ./src/index.ts vai mostrar a linha 
+server.listen(3333, ()=> console.log("app rodando aaaa")); no console e o console fica parado até eu dar ctrl+c
+
+Se eu rodar no navegador : "http://localhost:3333/" vai aparecer a linha 
+res.send("ola dev 1604") do server.ts ( por que o ./src/index.ts importa o src\server\Server.ts)
+
+----------
+Criar arquivo tsconfig.json
+yarn tsc -init
+com isso, ao rodar yarn tsc  - vai gerar todos os arquivos .js a partir do .ts
+
+---------------
+no .gitignore
+/node_modules
+Ao salvar o .gitignore  a pasta /node_modules fica cinza automaticamente
