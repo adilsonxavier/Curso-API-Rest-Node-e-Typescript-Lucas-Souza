@@ -7,10 +7,7 @@ https://www.youtube.com/watch?v=-gt6RyiIyxo&list=PLE0DHiXlN_qqOfRvFS0BiwZXGrsKs7
 Primeiros passos para criação de APIs Restfull - Jorge Aluizio
 ========================
 
-Instalar o nvm ( versões do node - não deu certp)
-https://github.com/coreybutler/nvm-windows/releases
-nvm-setup.exe
---------------------------
+npm init - cria o package.json em diretorio vazio
 
 yarn add express
 yarn add -D typescript @types/express ts-node-dev
@@ -39,3 +36,161 @@ com isso, ao rodar yarn tsc  - vai gerar todos os arquivos .js a partir do .ts
 no .gitignore
 /node_modules
 Ao salvar o .gitignore  a pasta /node_modules fica cinza automaticamente
+
+------------
+Commitar pelo VS code
+preencher o campo message e clicar em commit
+Publicar pelo Vs code
+clicar "Sync Changes" , Mensagem "This action will pull and push commits from and to 'origin/master'" , OK
+
+====================================================================================================
+                              Elint e Prettier
+                              ================
+
+Instalar eslint
+------------------
+Instalar a exrtenção Eslint no Vs Code
+npx eslint --init
+
+-------------
+
+? What do you want to lint? ... 
+√ JavaScript
+
+? What do you want to lint? ... 
+√ JavaScript
+
+How would you like to use ESLint? ... 
+> To check syntax and find problems
+
+? What type of modules does your project use? ... 
+> JavaScript modules (import/export)
+
+? Which framework does your project use? ... 
+> None of these
+
+? Does your project use TypeScript? » no / yes
+
+? Where does your code run? ...  (Press <space> to select, <a> to toggle all, <i> to invert selection)
+√ Browser
+√ Node
+
+eslint, @eslint/js, globals, typescript-eslint, @eslint/json
+? Would you like to install them now? » No / Yes   
+
+? Which package manager do you want to use? ... 
+> npm
+  yarn
+
+  -------------
+  No package.json:
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint" : "eslint"
+  },
+
+  rodando agora "npm run lint" ou "yarn lint"
+  Não vai dar erro por que ainda não tem nenhum arquivo javascript.
+
+  incluindo um index.ja:
+  let hello = "hello";
+
+  vai dar:
+  ----------
+  C:\Tito\2025\eslint-tutorial\index.js
+  1:5  error  'hello' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+✖ 1 problem (1 error, 0 warnings)
+---------------------
+
+Na página :
+https://eslint.org/docs/latest/rules/
+tem as regras default ( recommended ) do eslint
+Pra desabilitar as regras recoendadas , comente as linhas do arquivo eslint.config.mjs como abaixo
+--------
+export default defineConfig([
+  { 
+    files: ["**/*.{js,mjs,cjs,ts}"], 
+   // plugins: { js }, extends: ["js/recommended"] // tá no "@eslint/js"
+  },
+  { files: ["**/*.{js,mjs,cjs,ts}"], 
+    languageOptions: { globals: globals.node } 
+  },
+ // tseslint.configs.recommended // tá no "typescript-eslint"
+]);
+------------
+
+Alterando configurações de regras do ESlint e tseslint
+------------------------------------------------------
+Ex: let hello = "hello"; vai gerar 2 erros do tipo: no-unused-vars
+Vai gerar 2 erros : no-unused-var (javascript) e @typescript-eslint/no-unused-vars (typescript)
+No eslint.config.mjs incluir as regras dentro do array de defineConfig:
+----------
+export default defineConfig([
+  { },
+  { },
+  tseslint.configs.recommended ,
+    {
+    rules: {
+     "no-unused-vars" : "warn",
+    "@typescript-eslint/no-unused-vars" : "warn"
+    }
+  },
+]}  
+Observação: Se os erros e warnings não aparecerem highlighted no VS code, reiniciar o VS Code
+===========
+
+Instalar o prettier
+------------------
+
+"npm i --save-dev prettier" ou "yarn add prettier --dev"
+
+Instalar extensão "Prettier - Code formatter"
+
+ npm i -D eslint-plugin-prettier eslint-config-prettier
+
+ No eslint.config.mjs
+ --------------------
+ import eslintPluginPrettier from "eslint-plugin-prettier/recommended";
+ ...
+ export default defineConfig([
+  {...},
+  {...},
+    {
+    rules: {
+      ....
+      "capitalized-comments": ["error", "always"],
+    },
+  },
+  
+  No exemplo acima o prettier faz com que os comentários precisem começar com letra maiúscula
+
+  --------------
+  Comando "npm run lint --fix" ou "yarn lint --fix" :
+  Acerta o que for possível no código conforme as regras do eslint e prettier
+
+  Settings do VsCode
+  ==================
+  criar no raiz pasta : .vscode
+  dentro dela criar arquivo settings.json com conteúdo:
+  {
+    "editor.codeActionsOnSave":{
+        "source.fixAll.eslint" :"explicit"
+    }
+  }
+
+  Com isso sempre que um script for salvo altomaticamento serão corrigidos os erros do eslint e prettier
+
+====================================================================================================  
+
+How do I refresh the VS Code?
+-------------------------------
+The quickest way to refresh VS Code is by reloading the window. You can do this by pressing Ctrl + Shift + P (on Windows/Linux) or Cmd + Shift + P (on macOS) to open the Command Palette.
+Type Reload Window and press Enter. This will refresh the entire VS Code window.
+
+
+EditorConfig for VS Code
+=========================
+Instalar extenção EditorConfig for VS Code
+Pasta root , botão direito, "Generate .editorconfig"
+Gera um arquivo com configurações ( é um opcional ao Eslint)

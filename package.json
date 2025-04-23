@@ -5,12 +5,21 @@
   "repository": "https://github.com/adilsonxavier/Curso-API-Rest-Node-e-Typescript-Lucas-Souza",
   "author": "adilsonxavier <adilsonxdesouza@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint"
+  },
   "dependencies": {
     "express": "^5.1.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.25.1",
     "@types/express": "^5.0.1",
+    "eslint": "^9.25.1",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.3",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.31.0"
   }
 }
