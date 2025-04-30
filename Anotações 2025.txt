@@ -277,8 +277,13 @@ server.listen(process.env.PORT, ()=> {
 });   
 
 ==================
-Copilar o código .ts para .js
+Compilar o código .ts para .js
 -----------------------------
 
 (só a primeira vez) yarn tsc -init -> gera o arquivo tsconfig.json
 yarn tsc -> compila todos os .ts do projeto
+
+Pra mudar a configuração padrão (que salva o .js nas mesmas pastas de seus respectivos .ts), altere o tsconfig.json :
+"rootDir": "./src",  => mostra qual pasta tem os arquivos .ts pra serem compilados
+                        (com isso o que tiver fora desta pasta não será compilado)
+ "outDir": "./build", => pasta pra onde irão os arquivos .js compilados                        
