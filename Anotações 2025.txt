@@ -274,4 +274,11 @@ Em index.ts:
 server.listen(process.env.PORT, ()=> {
     console.log("PORT .. "+process.env.PORT || 3333);
      // O "process" é nativo do Node. O conteúdo da variável PORT está  acessível por causa da lib dotenv
-});                           
+});   
+
+==================
+Copilar o código .ts para .js
+-----------------------------
+
+(só a primeira vez) yarn tsc -init -> gera o arquivo tsconfig.json
+yarn tsc -> compila todos os .ts do projeto

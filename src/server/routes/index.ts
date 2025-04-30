@@ -23,6 +23,11 @@ router.post("/", (req,res)=>{
  
 })
 
+router.post("/aaa", (req,res)=>{
+    res.send("ola dev '.server/routes/index.ts' router.get / 1115")
+   
+  })
+
 router.post("/testequery", (req,res)=>{
     console.log("testando com query ?nome=adilson na url " + req.query.nome)
     res.send(req.query.nome)
