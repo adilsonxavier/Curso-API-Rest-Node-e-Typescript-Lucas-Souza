@@ -1,11 +1,14 @@
 import express from "express";
+import {router} from "./routes";
+import "dotenv/config";
 
 const server = express();
 
-server.get("/", (req,res)=>{
-  res.send("ola dev 1604")
-  console.log("app rodando aaaa server");
-})
+server.use(express.json() );// sem isso não consigo usar os dados de body
+
+server.use(router)
+
+
 
 interface Teste{
 

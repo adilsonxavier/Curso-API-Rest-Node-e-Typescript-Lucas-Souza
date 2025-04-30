@@ -194,3 +194,84 @@ EditorConfig for VS Code
 Instalar extenção EditorConfig for VS Code
 Pasta root , botão direito, "Generate .editorconfig"
 Gera um arquivo com configurações ( é um opcional ao Eslint)
+
+Rodar mais de um comando ao mesmo tempo 
+=======================================
+No package.json
+ "scripts": {
+    "rodar" : "tsc && yarn ts-node-dev ./src/index.ts"
+  },
+
+=========
+Rotas
+-----
+  
+src\server\routes\index.ts
+import {Router} from "express";
+const router =  Router(); (não tem new porque Router dentro de express é uma função e não uma classe)
+
+router.post("/teste", (req,res)=>{
+  // res.send("ola dev '.server/routes/index.ts' router.get /teste 1115" + JSON.stringify( req.body))
+  res.json(req.body)  // O método res.json(req.body) manda de volta o conteúdo pro front end (assim como o res.send(conteudo))
+                      // mas o res.json instrui o front end que se trata de um json e com isso ele vai conseguir tratar
+                      // melhor os dados , podendo acessar o Header e outras configurações
+  console.log("req.body " + JSON.stringify( req.body));
+  //console.log("app rodando aaaa router.get /teste 1115");
+})
+
+src\server\Server.ts
+import express from "express";
+import {router} from "./routes";
+
+const server = express();
+server.use(express.json() );// sem isso não consigo usar os dados de body
+
+server.use(router) // aqui estou dizendo que o objeto server (express) está usando o objeto router ( que também 
+                   //vem do express mas não ele todo, só o Router dentro do express)
+
+src\index.ts 
+import {server} from "./server/Server"; // Aqui , no index principal da app eu uso o arquivo .server/index.ts
+server.listen(3333, ()=> console.log("app rodando .index.ts 1117")); 
+
+Passando dados na url ( mesmo se for POST) via query (ponto de ?)
+------------------------------------------
+
+router.post("/testequery", (req,res)=>{
+    console.log("testando com query ?nome=adilson na url " + req.query.nome)
+    res.send(req.query.nome)
+   
+  })
+// Url do Postman: http://localhost:3333/testequery/?nome=adilson  
+
+===================
+yarn add http.status.codes
+Instala um Enum de códigos http
+  
+import {StatusCodes} from "http-status-codes"
+
+router.post("/teste", (req,res)=>{
+  res.status(StatusCodes.FORBIDDEN).json(req.body)  /
+  console.log("req.body " + JSON.stringify( req.body));
+}
+Vai aparecer no Postman status 403 mesmo que na verdade seja 200
+
+===================
+Variáveis de Ambiente
+--------------------
+
+yarn add dotenv
+
+Em server.ts :
+import "dotenv/config"; => é sem "from" mesmo . Desta forma ele vai apenas executar o script , sem criar nenhuma 
+                           variável como ocorre quando tem from. Esta execução vai tornar as variáveis do arquivo .env
+
+Criar arquivo .env na raiz do projeto com conteúdo de exemplo:
+----------
+PORT = 3335
+NODE_ENv = deV
+--------------
+Em index.ts:
+server.listen(process.env.PORT, ()=> {
+    console.log("PORT .. "+process.env.PORT || 3333);
+     // O "process" é nativo do Node. O conteúdo da variável PORT está  acessível por causa da lib dotenv
+});                           
