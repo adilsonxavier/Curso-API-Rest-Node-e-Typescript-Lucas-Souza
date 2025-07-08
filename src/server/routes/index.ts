@@ -1,5 +1,9 @@
 import {Router} from "express";
 import {StatusCodes} from "http-status-codes"
+
+import {CidadesControler} from "./../controllers";
+import { createBodyValidator } from "../controllers/cidades/Create";
+
 const router =  Router();
 
 router.get("/teste", (req,res)=>{
@@ -22,6 +26,11 @@ router.post("/", (req,res)=>{
   res.send("ola dev '.server/routes/index.ts' router.get / 1115")
  
 })
+
+router.post("/cidade", 
+    CidadesControler.createBodyValidator, 
+    CidadesControler.createQueryValidator, 
+    CidadesControler.create)
 
 router.post("/aaa", (req,res)=>{
     res.send("ola dev '.server/routes/index.ts' router.get / 1115")

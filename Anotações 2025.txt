@@ -287,3 +287,61 @@ Pra mudar a configuração padrão (que salva o .js nas mesmas pastas de seus re
 "rootDir": "./src",  => mostra qual pasta tem os arquivos .ts pra serem compilados
                         (com isso o que tiver fora desta pasta não será compilado)
  "outDir": "./build", => pasta pra onde irão os arquivos .js compilados                        
+ ================================
+ yarn add yup ( não é uma devDependencie) 
+
+ =============
+         res.send({
+            errors: {
+                default: yupError.message,
+            },
+        }).status(StatusCodes.BAD_REQUEST);
+==================================
+Caminho de execução da app
+----------------------------
+
+src\index.ts 
+---------------    
+import {server} from "./server/Server";
+ ||
+ \/
+
+src\server\Server.ts 
+----------------------  
+import express from "express";
+import {router} from "./routes";
+ ||
+ \/
+
+ src\server\routes\index.ts
+ --------------------------
+ import {CidadesControler} from "./../controllers";
+  ||
+  \/
+
+src\server\controllers\index.ts
+-------------------------------
+import "../shared/services/TraducoesYup"
+export * from "./cidades";
+  ||
+  \/
+
+src\server\controllers\cidades\index.ts
+-------------------------------------
+import * as create from "./Create"
+export const CidadesControler = {
+    
+   ... create
+};
+  ||
+  \/
+src\server\controllers\cidades\Create.ts
+----------------------------------------
+import * as yup from "yup";
+export const create = async (req: Request<{}, {}, ICidade>, res: Response) => { ....
+
+=========================================================================
+
+
+
+

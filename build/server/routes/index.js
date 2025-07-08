@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = require("express");
+const controllers_1 = require("./../controllers");
 const router = (0, express_1.Router)();
 exports.router = router;
 router.get("/teste", (req, res) => {
@@ -19,6 +20,7 @@ router.get("/teste", (req, res) => {
 router.post("/", (req, res) => {
     res.send("ola dev '.server/routes/index.ts' router.get / 1115");
 });
+router.post("/cidade", controllers_1.CidadesControler.create);
 router.post("/aaa", (req, res) => {
     res.send("ola dev '.server/routes/index.ts' router.get / 1115");
 });
