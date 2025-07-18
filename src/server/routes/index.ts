@@ -29,7 +29,7 @@ router.post("/", (req,res)=>{
 
 router.post("/cidade", 
     CidadesControler.createBodyValidator, 
-    CidadesControler.createQueryValidator, 
+    CidadesControler.createValidation, 
     CidadesControler.create)
 
 router.post("/aaa", (req,res)=>{

@@ -20,7 +20,7 @@ router.get("/teste", (req, res) => {
 router.post("/", (req, res) => {
     res.send("ola dev '.server/routes/index.ts' router.get / 1115");
 });
-router.post("/cidade", controllers_1.CidadesControler.create);
+router.post("/cidade", controllers_1.CidadesControler.createBodyValidator, controllers_1.CidadesControler.createValidation, controllers_1.CidadesControler.create);
 router.post("/aaa", (req, res) => {
     res.send("ola dev '.server/routes/index.ts' router.get / 1115");
 });

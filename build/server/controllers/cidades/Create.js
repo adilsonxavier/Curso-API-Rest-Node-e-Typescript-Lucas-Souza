@@ -42,38 +42,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.create = void 0;
+exports.create = exports.createValidation = exports.createBodyValidator = void 0;
 const http_status_codes_1 = require("http-status-codes");
 const yup = __importStar(require("yup"));
+const middlewares_1 = require("../../shared/middlewares");
+const queryValidation = yup.object().shape({
+    filter: yup.string().required()
+});
 const bodyValidation = yup.object().shape({
     nome: yup.string().required().min(3),
     estado: yup.string().required().min(2),
 });
-// Como o yup está usando a interface ICidade, é necessário usar .required() ou mudar na interface:
-// nome: string; para nome?: string;
-// Passando o mouse sobre o Request abaixo:
-// (alias) interface Request<P = core.ParamsDictionary, ResBody = any, ReqBody = any, ReqQuery = QueryString.ParsedQs,
-// Locals extends Record<string, any> = Record<string, any>>
-// Veja que o terceiro parâmetro é ReqBody = any então eu vou passar na 3º posição o tipo ICidade substituindo
-// o tipo dele (que era any) pra melhorar a  tipagem (req: Request<{},{},ICidade>...
-const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //return res.send("Create cidade");
-    // com o return da erro em src\server\routes\index.ts na linha:
-    // router.post("/cidade",CidadesControler.create)
-    //    const data: ICidade = req.body;
-    //    console.log(data.nome);
-    //    res.send("Create cidade");
-    // if (req.body.nome === undefined) {
-    //       res.status(StatusCodes.BAD_REQUEST).send("informe o nomsse");
-    // }
-    // res.send("Create cidade "+ req.body.nome);
-    // console.log(req.body.nome);
-    //======= Usando o yup ============
-    let validateData = undefined;
+const createBodyValidator = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log("cidade create;");
-        //validateData = await bodyValidation.validate(req.body);
-        validateData = yield bodyValidation.validate(req.body, { abortEarly: false });
+        console.log("cidade createBodyValidator;");
+        yield bodyValidation.validate(req.body, { abortEarly: false });
+        next();
     }
     catch (error) {
         const yupError = error; // Estudar melhor o "as"
@@ -87,15 +71,33 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({
             errors: validationErrors,
         });
-        // ================
-        // também funcionou sem o json() no final:
-        // res.send({
-        //     errors: {
-        //         default: yupError.message,
-        //     },
-        // }).status(StatusCodes.BAD_REQUEST);
     }
-    console.log("validateData" + JSON.stringify(validateData));
-    res.send(validateData);
+});
+exports.createBodyValidator = createBodyValidator;
+// export const createQueryValidator : RequestHandler= async (req, res,next) => {
+//     try {
+//         console.log("cidade createQueryValidator ");
+//         //validateData = await bodyValidation.validate(req.body);
+//         await queryValidation.validate(req.query,{abortEarly:false});
+//         next();
+//     } catch (error) {
+//         const yupError = error as yup.ValidationError; // Estudar melhor o "as"
+//         const validationErrors: Record<string,string> = {};
+//         yupError.inner.forEach(erro=>{
+//             if(!erro.path)
+//                 return;
+//            validationErrors[erro.path] = erro.message;
+//         })
+//         console.log(" validationErrors:::"+ JSON.stringify( validationErrors));
+//         res.status(StatusCodes.BAD_REQUEST).json({
+//             errors:  validationErrors,
+//         });
+//     }
+// }
+exports.createValidation = (0, middlewares_1.validation)("query", queryValidation);
+const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("usando middleware");
+    console.log("validateData" + JSON.stringify(req.body));
+    res.send(req.body);
 });
 exports.create = create;
