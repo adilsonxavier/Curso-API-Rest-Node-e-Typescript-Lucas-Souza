@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validation = void 0;
-const http_status_codes_1 = require("http-status-codes");
 // A função validation não retorna um objeto e sim uma função (do tipo RequestHandler) , por isso eu não posso usar
 // como abaixo e criei um type TValidation (poderia também ser uma interface) que retorna uma função (com retorno
 // RequestHandler) e a função validation: TValidation não dará mais erro
@@ -47,21 +46,23 @@ const http_status_codes_1 = require("http-status-codes");
 //              });
 //          }
 //  }
-const validation = (field, scheme) => (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("método validation");
-    try {
-        yield scheme.validate(req[field], { abortEarly: false });
-        return next();
-    }
-    catch (err) {
-        const yupError = err;
-        const errors = {};
-        yupError.inner.forEach((error) => {
-            if (error.path === undefined)
-                return;
-            errors[error.path] = error.message;
-        });
-        res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ errors, });
-    }
+const validation = 
+// (field,scheme) => async (req, res, next) => {
+(schemas) => (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("método validation - schemas:: " + JSON.stringify(schemas));
+    // try {
+    //     //await scheme.validate(req[field], { abortEarly: false });
+    //     await arg.header.
+    //     return next();
+    // } catch (err) {
+    //     const yupError = err as ValidationError;
+    //     const errors: Record<string, string> = {};
+    //     yupError.inner.forEach((error) => {
+    //         if (error.path === undefined) return;
+    //         errors[error.path] = error.message;
+    //     });
+    //      res.status(StatusCodes.BAD_REQUEST).json({errors,  });
+    // }
+    return next();
 });
 exports.validation = validation;

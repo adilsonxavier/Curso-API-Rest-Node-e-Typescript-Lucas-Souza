@@ -94,7 +94,10 @@ exports.createBodyValidator = createBodyValidator;
 //         });
 //     }
 // }
-exports.createValidation = (0, middlewares_1.validation)("query", queryValidation);
+//export const createValidation = validation("query",queryValidation);
+exports.createValidation = (0, middlewares_1.validation)({
+    query: bodyValidation
+});
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("usando middleware");
     console.log("validateData" + JSON.stringify(req.body));

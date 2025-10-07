@@ -81,7 +81,11 @@ export const createBodyValidator : RequestHandler= async (req, res,next) => {
 // }
 
 
-export const createValidation = validation("query",queryValidation);
+//export const createValidation = validation("query",queryValidation);
+export const createValidation = validation({
+    query:
+    bodyValidation
+});
 
 export const create = async (req: Request<{}, {}, ICidade>, res: Response) => {
    console.log("usando middleware");

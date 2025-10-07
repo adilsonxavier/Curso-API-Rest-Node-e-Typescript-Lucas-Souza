@@ -1,8 +1,13 @@
-import { RequestHandler } from "express";
+import { json, RequestHandler } from "express";
 import { SchemaOf,ValidationError } from "yup";
 import { StatusCodes } from "http-status-codes";
 
-type TValidation = (field: "header" | "body"| "params"|"query" ,scheme: SchemaOf<any>) => RequestHandler;
+type TProperty = "header" | "body"| "params"|"query";
+
+type TAllSchemas = Record<TProperty,SchemaOf<any>>
+
+//type TValidation = (field: TProperty ,scheme: SchemaOf<any>) => RequestHandler;
+type TValidation = (schemas: Partial<TAllSchemas>) => RequestHandler;
 
 // A função validation não retorna um objeto e sim uma função (do tipo RequestHandler) , por isso eu não posso usar
 // como abaixo e criei um type TValidation (poderia também ser uma interface) que retorna uma função (com retorno
@@ -55,19 +60,22 @@ type TValidation = (field: "header" | "body"| "params"|"query" ,scheme: SchemaOf
 //  }
 
 export const validation: TValidation =
-    (field,scheme) => async (req, res, next) => {
-        console.log("método validation")
-        try {
-            await scheme.validate(req[field], { abortEarly: false });
-            return next();
-        } catch (err) {
-            const yupError = err as ValidationError;
-            const errors: Record<string, string> = {};
-            yupError.inner.forEach((error) => {
-                if (error.path === undefined) return;
-                errors[error.path] = error.message;
-            });
+   // (field,scheme) => async (req, res, next) => {
+    (schemas) => async (req, res, next) => {
+        console.log("método validation - schemas:: "+JSON.stringify( schemas) )
+        // try {
+        //     //await scheme.validate(req[field], { abortEarly: false });
+        //     await arg.header.
+        //     return next();
+        // } catch (err) {
+        //     const yupError = err as ValidationError;
+        //     const errors: Record<string, string> = {};
+        //     yupError.inner.forEach((error) => {
+        //         if (error.path === undefined) return;
+        //         errors[error.path] = error.message;
+        //     });
 
-             res.status(StatusCodes.BAD_REQUEST).json({errors,  });
-        }
+        //      res.status(StatusCodes.BAD_REQUEST).json({errors,  });
+        // }
+        return next();
     };
