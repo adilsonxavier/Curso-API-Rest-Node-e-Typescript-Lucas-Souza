@@ -27,19 +27,19 @@ const bodyValidation: yup.SchemaOf<ICidade> = yup.object().shape({
 
 export const createBodyValidator : RequestHandler= async (req, res,next) => {
     try {
-        console.log("cidade createBodyValidator;");
+        console.log("cidade createBodyValidator aaa;");
 
         await bodyValidation.validate(req.body,{abortEarly:false});
         next();
     } catch (error) {
         const yupError = error as yup.ValidationError; // Estudar melhor o "as"
-        
+        console.log("cath erro validacao");
         const validationErrors: Record<string,string> = {};
 
         yupError.inner.forEach(erro=>{
             if(!erro.path)
                 return;
-           validationErrors[erro.path] = erro.message;
+           validationErrors[erro.path] = erro.message + "...erro...";
           
 
         })

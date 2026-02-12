@@ -55,7 +55,7 @@ const bodyValidation = yup.object().shape({
 });
 const createBodyValidator = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log("cidade createBodyValidator;");
+        console.log("cidade createBodyValidator aaa;");
         yield bodyValidation.validate(req.body, { abortEarly: false });
         next();
     }

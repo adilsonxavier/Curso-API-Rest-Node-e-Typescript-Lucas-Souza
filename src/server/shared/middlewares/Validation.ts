@@ -62,7 +62,7 @@ type TValidation = (schemas: Partial<TAllSchemas>) => RequestHandler;
 export const validation: TValidation =
    // (field,scheme) => async (req, res, next) => {
     (schemas) => async (req, res, next) => {
-        console.log("método validation - schemas:: "+JSON.stringify( schemas) )
+        console.log("método validation - sssschemas:: "+JSON.stringify( schemas) )
         // try {
         //     //await scheme.validate(req[field], { abortEarly: false });
         //     await arg.header.
