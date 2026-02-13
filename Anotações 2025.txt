@@ -316,6 +316,10 @@ import {router} from "./routes";
  src\server\routes\index.ts
  --------------------------
  import {CidadesControler} from "./../controllers";
+ router.post("/cidade", 
+    CidadesControler.createBodyValidator, 
+    CidadesControler.createValidation, 
+    CidadesControler.create)
   ||
   \/
 
